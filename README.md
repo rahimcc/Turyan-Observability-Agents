@@ -1,11 +1,17 @@
 # vm-agents
 
-observability/
-  vm-agent-base/          # shared: alloy logs, node_exporter, cadvisor
-    alloy-base.river
-    docker-compose.base.yml
-  vm-agents/
-    airflow-vm/
-      alloy-airflow.river      # imports/extends base + adds statsd bits
-      mapping.yml
-      docker-compose.override.yml
+
+```
+vm-observability-agents
+├── vm-agent-base/                     # shared across every vm-agent, regardless of app
+│   ├── alloy-base.river               # log shipping + prometheus.exporter.unix/cadvisor
+│   ├── docker-compose.base.yml        
+│   └── README.md
+│
+└── vm-agents/
+    └── airflow-vm/                    # app-specific overlay for Airflow
+        ├── alloy-airflow.river        # imports base, adds statsd_exporter component/job
+        ├── mapping.yml                # statsd -> prometheus metric mapping
+        ├── docker-compose.override.yml
+        └── README.md  
+```
